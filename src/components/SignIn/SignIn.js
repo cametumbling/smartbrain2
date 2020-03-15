@@ -43,9 +43,6 @@ class Signin extends React.Component {
           <div className="measure">
             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
               <legend className="f1 fw6 ph0 mh0">Sign In</legend>
-              <div>You can use the following login credentials:</div>
-              <div>demo@demo.com</div>
-              <div>Password: demo</div>
               <div className="mt3">
                 <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                 <input
