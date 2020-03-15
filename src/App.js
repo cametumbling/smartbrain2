@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Particles from 'react-particles-js';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Navigation from './components/navigation/Navigation';
-import Signin from './components/Signin/Signin';
+import Signin from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 import Logo from './components/logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
