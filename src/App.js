@@ -8,6 +8,7 @@ import Logo from './components/logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import Modal from './components/Modal/Modal';
+import Profile from './components/Profile/Profile';
 import './App.css';
 
 const particlesOptions = {
@@ -28,7 +29,7 @@ const initialState = {
   boxes: [],
   route: 'home',
   isSignedIn: true,
-  isProfileOpen: false,
+  isProfileOpen: true,
   user: {
     id: '',
     name: '',
@@ -132,10 +133,10 @@ class App extends Component {
          <Particles className='particles'
           params={particlesOptions}
         />
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} toggleModal={this.toggleModal}/>
         { isProfileOpen &&
           <Modal>
-                <Profile isProfileOpen={isProfileOpen} />
+                <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal}/>
           </Modal>
         }
         { route === 'home'
