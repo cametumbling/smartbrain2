@@ -36,7 +36,8 @@ const initialState = {
     email: '',
     entries: 0,
     joined: '',
-
+    pet: '',
+    age: '',
   }
 }
 
@@ -128,7 +129,7 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, imageUrl, route, boxes, isProfileOpen } = this.state;
+    const { isSignedIn, imageUrl, route, boxes, isProfileOpen, user } = this.state;
     return (
       <div className="App">
          <Particles className='particles'
@@ -137,13 +138,15 @@ class App extends Component {
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} toggleModal={this.toggleModal}/>
         { isProfileOpen &&
           <Modal>
-                <Profile isProfileOpen={isProfileOpen} toggleModal={this.toggleModal}/>
+                <Profile
+                  isProfileOpen={isProfileOpen}
+                  toggleModal={this.toggleModal}
+                  user={user}/>
           </Modal>
         }
         { route === 'home'
           ? <div>
               <Logo />
-
               <Rank
                 name={this.state.user.name}
                 entries={this.state.user.entries}
