@@ -128,6 +128,9 @@ class App extends Component {
         { route === 'home'
           ? <div>
               <Logo />
+              <Modal>
+                {'hello'}
+              </Modal>
               <Rank
                 name={this.state.user.name}
                 entries={this.state.user.entries}
