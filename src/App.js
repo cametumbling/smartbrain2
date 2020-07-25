@@ -29,7 +29,7 @@ const initialState = {
   boxes: [],
   route: 'home',
   isSignedIn: true,
-  isProfileOpen: true,
+  isProfileOpen: false,
   user: {
     id: '',
     name: '',
