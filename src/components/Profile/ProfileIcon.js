@@ -20,6 +20,7 @@ const ProfileIcon = (props) => {
             class="br-100 ba h3 w3 dib" alt="avatar"/>
         </DropdownToggle>
       <DropdownMenu
+        right
         className='b--transparent shadow-5'
         style={{marginTop: '10px', backgroundColor: 'rgba(255, 255, 255, 0.5)'}}>
         <DropdownItem>View Profile</DropdownItem>
