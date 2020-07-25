@@ -28,6 +28,7 @@ const initialState = {
   boxes: [],
   route: 'home',
   isSignedIn: true,
+  isProfileOpen: false,
   user: {
     id: '',
     name: '',
@@ -117,20 +118,30 @@ class App extends Component {
     this.setState({route: route});
   }
 
+  toggleModal = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      isProfileOpen: !prevState.isProfileOpen,
+    }))
+  }
+
   render() {
-    const { isSignedIn, imageUrl, route, boxes } = this.state;
+    const { isSignedIn, imageUrl, route, boxes, isProfileOpen } = this.state;
     return (
       <div className="App">
          <Particles className='particles'
           params={particlesOptions}
         />
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        { isProfileOpen &&
+          <Modal>
+                <Profile isProfileOpen={isProfileOpen} />
+          </Modal>
+        }
         { route === 'home'
           ? <div>
               <Logo />
-              <Modal>
-                {'hello'}
-              </Modal>
+
               <Rank
                 name={this.state.user.name}
                 entries={this.state.user.entries}
