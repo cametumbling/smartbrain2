@@ -31,7 +31,7 @@ class Profile extends React.Component {
     fetch(`http://localhost:3000/profile/${this.props.user.id}`, {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ formInput.data })
+      body: JSON.stringify({ formInput:data })
     }).then(resp => {
       this.props.toggleModal();
       this.props.loadUser({...this.props.user, ...data});
