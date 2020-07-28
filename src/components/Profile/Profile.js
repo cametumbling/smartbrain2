@@ -7,7 +7,7 @@ class Profile extends React.Component {
     this.state = {
       name: this.props.user.name,
       age: this.props.user.age,
-      pet: this.props.user.pet,
+      pet: this.props.user.pet
     }
   }
 
@@ -54,7 +54,7 @@ class Profile extends React.Component {
             <hr/>
             <label className="mt2 fw6" htmlFor="user-name">Name: </label>
             <input
-              onClick = {this.onFormChange}
+              onChange = {this.onFormChange}
               className="pa2 ba w-100"
               placeholder={user.name}
               type="text"
@@ -63,7 +63,7 @@ class Profile extends React.Component {
             />
             <label className="mt2 fw6" htmlFor="user-age">Age: </label>
             <input
-              onClick = {this.onFormChange}
+              onChange = {this.onFormChange}
               className="pa2 ba w-100"
               placeholder={user.age}
               type="text"
@@ -72,7 +72,7 @@ class Profile extends React.Component {
             />
             <label className="mt2 fw6" htmlFor="user-pet">Pet: </label>
             <input
-              onClick = {this.onFormChange}
+              onChange = {this.onFormChange}
               className="pa2 ba w-100"
               placeholder={user.pet}
               type="text"
