@@ -25,34 +25,42 @@ class Signin extends React.Component {
 
   onSubmitSignIn = () => {
     fetch('http://localhost:3000/signin', {
-      method: 'post',
+      method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         email: this.state.signInEmail,
         password: this.state.signInPassword
       })
     })
-      .then(response => response.json())
-      .then(data => {
-        if (data.userId && data.success === 'true') {
-          this.saveAuthTokenInSession(data.token)
-          fetch(`http://localhost:3000/profile/${data.userId}`, {
-            method: 'get',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': data.token
-            }
-          })
-          .then(resp => resp.json())
-          .then(user => {
-            if (user && user.email){
-              this.props.loadUser(user)
-              this.props.onRouteChange('home');
-            }
-          })
-        .catch(console.log)
-        }
-      })
+    .then(response => response.json())
+    /*
+    .then(data => {
+      if (data.userId && data.success === 'true') {
+        this.saveAuthTokenInSession(data.token)
+        fetch(`http://localhost:3000/profile/${data.userId}`, {
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': data.token
+          }
+        })
+        .then(resp => resp.json())
+        .then(user => {
+          if (user && user.email){
+            this.props.loadUser(user)
+            this.props.onRouteChange('home');
+          }
+        })
+      */
+    //the above was as it was at the end of jr - sr, but the below is on his git
+    .then(data => {
+      if (data && data.success === 'true') {
+        this.saveAuthTokenInSession(data.token)
+        this.props.loadUser(data.user)
+        this.props.onRouteChange('home');
+      }
+    })
+    .catch(console.log)
   }
 
   render() {

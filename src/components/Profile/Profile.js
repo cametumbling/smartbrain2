@@ -29,7 +29,7 @@ class Profile extends React.Component {
 
   onProfileUpdate = (data) => {
     fetch(`http://localhost:3000/profile/${this.props.user.id}`, {
-      method: 'post',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': window.sessionStorage.getItem('token')
@@ -44,7 +44,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { toggleModal, user } = this.props;
     const { name, age, pet } = this.state;
     return (
       <div className='profile-modal'>
@@ -97,7 +97,7 @@ class Profile extends React.Component {
               </button>
             </div>
           </main>
-          <div className='modal-close' onClick={this.props.toggleModal}>&times;</div>
+          <div className='modal-close' onClick={toggleModal}>&times;</div>
         </article>
       </div>
     );

@@ -51,25 +51,25 @@ class App extends Component {
     const token = window.sessionStorage.getItem('token');
     if (token) {
       fetch('http://localhost:3000/signin', {
-        method: 'post',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': token
         }
       })
-      .then(resp => resp.json())
+      .then(response => response.json())
       .then(data => {
         if (data && data.id) {
           fetch(`http://localhost:3000/profile/${data.id}`, {
-            method: 'get',
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': token
             }
           })
-          .then(resp => resp.json())
+          .then(response => response.json())
           .then(user => {
-            if (user && user.email){
+            if (user && user.email) {
               this.loadUser(user)
               this.onRouteChange('home');
             }
@@ -86,7 +86,9 @@ class App extends Component {
       name: data.name,
       email: data.email,
       entries: data.entries,
-      joined: data.joined
+      joined: data.joined,
+      pet: data.pet,
+      age: data.age
     }})
   }
 
@@ -160,6 +162,7 @@ class App extends Component {
     if (route === 'signout') {
       return this.setState(initialState)
     } else if (route === 'home') {
+      //PUT TOKEN REMOVAL HERE
       this.setState({isSignedIn: true})
     }
     this.setState({route: route});
