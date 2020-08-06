@@ -2,12 +2,28 @@ import React, { useState } from 'react';
 
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import './ProfileIcon.css';
+import { LOGOUT } from '../../constants/constants';
 
 const ProfileIcon = (props) => {
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const toggle = () => setDropdownOpen(prevState => !prevState);
+  const routeChange = props.onRouteChange;
+  const logout = () => {
+    fetch(LOGOUT, {
+      method: 'post',
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: window.sessionStorage.getItem('token'),
+      },
+    })
+      .then(resp => {
+        if (resp.status === 200) {
+          window.sessionStorage.removeItem("token");
+          routeChange('signout');
+        }
+      })
+      .catch(console.log());
+  };
 
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle} className='pa4 tc'>
@@ -25,8 +41,7 @@ const ProfileIcon = (props) => {
         style={{backgroundColor: 'rgba(255, 255, 255, 0.5)'}}>
         <DropdownItem onClick={props.toggleModal}>View Profile</DropdownItem>
         <DropdownItem divider />
-        <DropdownItem onClick={() => props.onRouteChange('signout') }>Sign Out</DropdownItem>
-        <DropdownItem disabled>Action (disabled)</DropdownItem>
+        <DropdownItem onClick={ logout }>Sign Out</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );

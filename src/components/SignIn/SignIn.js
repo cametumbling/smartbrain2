@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './SignIn.css';
+import { PROFILE, SIGNIN } from '../../constants/constants';
 
 class Signin extends React.Component {
   constructor(props) {
@@ -8,31 +9,34 @@ class Signin extends React.Component {
     this.state = {
       signInEmail: '',
       signInPassword: ''
-    }
+    };
   }
 
   onEmailChange = (event) => {
-    this.setState({signInEmail: event.target.value})
-  }
+    this.setState({ signInEmail: event.target.value })
+  };
 
   onPasswordChange = (event) => {
-    this.setState({signInPassword: event.target.value})
-  }
+    this.setState({ signInPassword: event.target.value })
+  };
 
   saveAuthTokenInSession = (token) => {
     window.sessionStorage.setItem('token', token);
-  }
+  };
 
   onSubmitSignIn = () => {
-    fetch('http://localhost:3000/signin', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+    fetch(SIGNIN, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         email: this.state.signInEmail,
         password: this.state.signInPassword
       })
     })
     .then(response => response.json())
+
     /*
     .then(data => {
       if (data.userId && data.success === 'true') {
@@ -54,14 +58,35 @@ class Signin extends React.Component {
       */
     //the above was as it was at the end of jr - sr, but the below is on his git
     .then(data => {
-      if (data && data.success === 'true') {
-        this.saveAuthTokenInSession(data.token)
-        this.props.loadUser(data.user)
-        this.props.onRouteChange('home');
+      if (data.userId && data.success === 'true') {
+        console.log(data);
+        this.saveAuthTokenInSession(data.token);
+        //this.props.loadUser(data.user)
+        //this.props.onRouteChange('home');
+        fetch(PROFILE + `${data.userId}`, {
+            method: "get",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: data.token,
+            },
+          })
+            .then(response => response.json())
+            .then(user => {
+              if (user && user.email) {
+                this.props.loadUser(user);
+                this.props.onRouteChange("home");
+              }
+            });
       }
     })
-    .catch(console.log)
+    .catch(console.log())
   }
+
+  onEnterPress = (event) => {
+    if (event.key === "Enter") {
+      this.onSubmitSignIn();
+    }
+  };
 
   render() {
     const { onRouteChange } = this.props;
@@ -79,6 +104,7 @@ class Signin extends React.Component {
                   name="email-address"
                   id="email-address"
                   onChange={this.onEmailChange}
+                  onKeyPress={this.onEnterPress}
                 />
               </div>
               <div className="mv3">
@@ -89,6 +115,7 @@ class Signin extends React.Component {
                   name="password"
                   id="password"
                   onChange={this.onPasswordChange}
+                  onKeyPress={this.onEnterPress}
                 />
               </div>
             </fieldset>

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Profile.css';
+import { PROFILE } from '../../constants/constants';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -28,11 +29,11 @@ class Profile extends React.Component {
   }
 
   onProfileUpdate = (data) => {
-    fetch(`http://localhost:3000/profile/${this.props.user.id}`, {
+    fetch(PROFILE + `${this.props.user.id}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': window.sessionStorage.getItem('token')
+        "Content-Type": "application/json",
+        Authorization: window.sessionStorage.getItem('token')
       },
       body: JSON.stringify({ formInput:data })
     }).then(resp => {
@@ -40,8 +41,15 @@ class Profile extends React.Component {
         this.props.toggleModal();
         this.props.loadUser({...this.props.user, ...data});
       }
-    }).catch(console.log)
-  }
+    }).catch(console.log())
+  };
+
+  onEnterPress = (event) => {
+    const { name, age, pet } = this.state;
+    if (event.key === "Enter") {
+      this.onProfileUpdate({ name, age, pet });
+    }
+  };
 
   render() {
     const { toggleModal, user } = this.props;
@@ -60,6 +68,7 @@ class Profile extends React.Component {
             <label className="mt2 fw6" htmlFor="user-name">Name: </label>
             <input
               onChange = {this.onFormChange}
+              onKeyPress={this.onEnterPress}
               className="pa2 ba w-100"
               placeholder={user.name}
               type="text"
@@ -69,6 +78,7 @@ class Profile extends React.Component {
             <label className="mt2 fw6" htmlFor="user-age">Age: </label>
             <input
               onChange = {this.onFormChange}
+              onKeyPress={this.onEnterPress}
               className="pa2 ba w-100"
               placeholder={user.age}
               type="text"
@@ -78,6 +88,7 @@ class Profile extends React.Component {
             <label className="mt2 fw6" htmlFor="user-pet">Pet: </label>
             <input
               onChange = {this.onFormChange}
+              onKeyPress={this.onEnterPress}
               className="pa2 ba w-100"
               placeholder={user.pet}
               type="text"
